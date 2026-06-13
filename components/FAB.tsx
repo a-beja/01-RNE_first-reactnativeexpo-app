@@ -3,20 +3,30 @@ import { StyleSheet, Text, Pressable } from 'react-native';
 
 interface Props {
     label: string;
-    position?: 'left' | 'right';
+    position?: 'left' | 'right' | 'center';
 
     // Methods
     onPress?: () => void;
     onLongPress?: () => void;
 }
 
-export default function FAB({ label, position = 'right', onPress, onLongPress }: Props) {
+export default function FAB({ label, position = 'center', onPress, onLongPress }: Props) {
 
     const [count, setCount] = useState(10);
 
+    const positionStyles = {
+      left: styles.positionLeft,
+      right: styles.positionRight,
+      center: null,
+    }
+
   return (
     <Pressable
-      style={[ styles.floatingButton, ( position === 'left' ? styles.positionLeft : styles.positionRight ) ]}
+      style={ ({ pressed }) => [ 
+        styles.floatingButton, 
+        positionStyles[position],
+        pressed ? { opacity: 0.5 } : { opacity: 1 }
+      ]}
       onPress={ onPress }
       onLongPress={ onLongPress }
     >
